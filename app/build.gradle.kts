@@ -5,12 +5,12 @@ plugins {
 
 android {
     namespace = "com.example.hsiehdemo0401"
-    compileSdk = 33
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.example.hsiehdemo0401"
         minSdk = 30
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -61,4 +61,6 @@ dependencies {
     implementation ("com.google.android.exoplayer:exoplayer-core:2.17.0")
     implementation ("com.google.android.exoplayer:exoplayer-ui:2.17.0")
 
+    // Glide
+    implementation("com.github.bumptech.glide:glide:4.11.0")
 }

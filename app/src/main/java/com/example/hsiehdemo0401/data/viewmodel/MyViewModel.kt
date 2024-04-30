@@ -4,7 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
+import com.example.hsiehdemo0401.ui.model.Model
+import com.example.hsiehdemo0401.ui.retrofit.WinWinRetrofit
 import kotlinx.coroutines.launch
 import retrofit2.Response
 
@@ -12,18 +13,18 @@ import retrofit2.Response
 class MyViewModel : ViewModel() {
 
     init {
-        getRandomNumber()
+        //getModel()
     }
 
-    // random
-    private val _randomLive = MutableLiveData<Int>()
-    val randomLive: LiveData<Int> = _randomLive
+    private val api = WinWinRetrofit.getApi
 
-    fun getRandomNumber() {
+    private val _modelLive = MutableLiveData<Response<Model>>()
+    val modelLive: LiveData<Response<Model>> = _modelLive
+
+    fun getModel() {
         viewModelScope.launch {
-            val random = (0..9).random()
-            delay(2000)
-            _randomLive.postValue(random)
+            val response = api.getModel()
+            _modelLive.postValue(response)
         }
     }
 

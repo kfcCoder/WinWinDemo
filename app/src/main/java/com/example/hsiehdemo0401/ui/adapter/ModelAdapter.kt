@@ -5,6 +5,8 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.bitmap.CenterCrop
+import com.bumptech.glide.load.resource.bitmap.CircleCrop
 import com.example.hsiehdemo0401.R
 import com.example.hsiehdemo0401.databinding.CellModelBinding
 import com.example.hsiehdemo0401.ui.model.Item
@@ -26,7 +28,9 @@ class ModelAdapter : RecyclerView.Adapter<ModelAdapter.ModelViewHolder>() {
         fun bind(item: Item) {
             Glide.with(binding.ivAvatar)
                 .load(item.user.imageUrl)
-                .circleCrop()
+                //.circleCrop()
+                //.centerCrop()
+                .transform(CenterCrop(), CircleCrop())
                 .into(binding.ivAvatar)
 
             binding.tvName.text = item.user.nickName

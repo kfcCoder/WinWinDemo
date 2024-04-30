@@ -5,14 +5,10 @@ import android.util.Log
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import com.example.hsiehdemo0401.data.pager_adapter.MyPagerAdapter
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.hsiehdemo0401.data.viewmodel.MyViewModel
 import com.example.hsiehdemo0401.databinding.ActivityMainBinding
-import com.example.hsiehdemo0401.ui.frag.FragOne
-import com.example.hsiehdemo0401.ui.frag.FragTwo
-import com.example.hsiehdemo0401.ui.retrofit.WinWinRetrofit
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.launch
+import com.example.hsiehdemo0401.ui.adapter.ModelAdapter
 
 const val TAG = "qq"
 
@@ -22,27 +18,28 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel by viewModels<MyViewModel>()
 
+    private val myAdapter = ModelAdapter()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main)
 
-        val fragList = listOf(FragOne(), FragTwo())
-        val pagerAdapter = MyPagerAdapter(fragList, supportFragmentManager, lifecycle)
-        binding.verticalPager.adapter = pagerAdapter
-
-//        viewModel.modelLive.observe(this) {
-//            val body = it.body()
-//            body?.let {
-//                Log.e(TAG, "model: $it")
-//            }
-//        }
-
-        val api = WinWinRetrofit.getApi
-        GlobalScope.launch {
-            val response = api.getModel()
-            val body = response.body()
-            Log.e(TAG, "onCreate: $body")
+        binding.recyclerView.apply {
+            layoutManager = LinearLayoutManager(this@MainActivity)
+            adapter = myAdapter
         }
+
+
+        viewModel.getModel()
+        viewModel.modelLive.observe(this) {
+            val body = it.body()
+            body?.let { model ->
+                myAdapter.list = model.data.items
+                Log.e(TAG, "model: $it")
+            }
+        }
+
+
 
 
     }

@@ -12,9 +12,7 @@ import retrofit2.Response
 
 class MyViewModel : ViewModel() {
 
-    init {
-        //getModel()
-    }
+
 
     private val api = WinWinRetrofit.getApi
 

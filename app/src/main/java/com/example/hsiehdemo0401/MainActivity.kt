@@ -2,6 +2,7 @@ package com.example.hsiehdemo0401
 
 import android.os.Bundle
 import android.util.Log
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Lifecycle
@@ -31,6 +32,7 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
+    private val viewModel by viewModels<MyViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +42,9 @@ class MainActivity : AppCompatActivity() {
         val pagerAdapter = MyPagerAdapter(fragList, supportFragmentManager, lifecycle)
         binding.verticalPager.adapter = pagerAdapter
 
+        viewModel.randomLive.observe(this) {
+            binding.textView.text = "$it"
+        }
 
 
 
